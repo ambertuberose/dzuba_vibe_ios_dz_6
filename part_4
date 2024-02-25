@@ -1,0 +1,29 @@
+// Протокол с одним методом и двумя свойствами, одно из которых optional
+protocol MyProtocol {
+    var requiredProperty: String { get }
+    var optionalProperty: Int? { get set }
+    
+    func myMethod()
+}
+
+// Класс, который подписывается на протокол, но реализует только одно обязательное свойство
+class MyClass: MyProtocol {
+    var requiredProperty: String = "Required Property"
+    var optionalProperty: Int?
+    
+    func myMethod() {
+        print("Executing myMethod()")
+    }
+}
+
+// Создание экземпляра класса и использование его метода и свойств
+let myObject = MyClass()
+myObject.myMethod()
+print("Required Property: \(myObject.requiredProperty)")
+
+// Попытка доступа к необязательному свойству, которое может быть nil
+if let optionalValue = myObject.optionalProperty {
+    print("Optional Property: \(optionalValue)")
+} else {
+    print("Optional Property is nil")
+}
