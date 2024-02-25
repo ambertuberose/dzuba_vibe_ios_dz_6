@@ -1,0 +1,17 @@
+import Foundation // Импортируем Foundation для использования arc4random_uniform
+
+// Определение протокола GameDice
+protocol GameDice {
+    var numberDice: Int { get }
+}
+
+// Расширение типа Int для соответствия протоколу GameDice
+extension Int: GameDice {
+    var numberDice: Int {
+        return self
+    }
+}
+
+// Пример использования
+let diceCoub = Int.random(in: 1...6) // Заполняем diceCoub случайным значением от 1 до 6
+print("Выпало \(diceCoub) на кубике")
