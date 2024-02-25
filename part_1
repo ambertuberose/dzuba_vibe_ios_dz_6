@@ -1,0 +1,38 @@
+struct IOSCollection<Element>: RandomAccessCollection {
+    private var elements: [Element]
+
+    init(elements: [Element] = []) {
+        self.elements = elements
+    }
+
+    var startIndex: Int {
+        return elements.startIndex
+    }
+
+    var endIndex: Int {
+        return elements.endIndex
+    }
+
+    subscript(index: Int) -> Element {
+        get {
+            return elements[index]
+        }
+        set {
+            if elements.capacity > elements.count {
+                // Массив не уникален, создаем копию
+                elements = Array(elements)
+            }
+            elements[index] = newValue
+        }
+    }
+}
+
+// Пример использования
+class SomeClass {}
+
+var collection1 = IOSCollection(elements: [SomeClass(), SomeClass(), SomeClass()])
+var collection2 = collection1 // Создается копия коллекции, но массив элементов остается тем же, что и у collection1
+
+collection2[0] = SomeClass() // При изменении элемента создается копия массива элементов
+
+print(collection1[0] !== collection2[0]) // Проверяем, что элементы первой и второй коллекции разные
