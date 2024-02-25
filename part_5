@@ -1,0 +1,59 @@
+// Протокол для работы с кодом
+protocol CodingProtocol {
+    var time: String { get set }
+    var codeCount: Int { get set }
+    
+    func writeCode(platform: Platform, numberOfSpecialist: Int)
+}
+
+// Протокол для остановки работы с кодом
+protocol StopCodingProtocol {
+    func stopCoding()
+}
+
+// Перечисление для платформ
+enum Platform {
+    case iOS
+    case Android
+    case Web
+}
+
+// Класс Компания
+class Company: CodingProtocol, StopCodingProtocol {
+    var numberOfProgrammers: Int
+    var specializations: [Platform]
+    
+    init(numberOfProgrammers: Int, specializations: [Platform]) {
+        self.numberOfProgrammers = numberOfProgrammers
+        self.specializations = specializations
+    }
+    
+    var time: String = ""
+    var codeCount: Int = 0
+    
+    func writeCode(platform: Platform, numberOfSpecialist: Int) {
+        if specializations.contains(platform) {
+            print("Разработка началась. Пишем код для \(platform)")
+            for _ in 1...numberOfSpecialist {
+                // Логика записи кода
+                codeCount += 100 // Пусть каждый специалист добавляет 100 строк кода
+            }
+            print("Код для \(platform) записан.")
+        } else {
+            print("Компания не специализируется на \(platform)")
+        }
+    }
+    
+    func stopCoding() {
+        print("Работа закончена. Сдаю в тестирование. Всего записано \(codeCount) строк кода.")
+    }
+}
+
+// Создание компании и тестирование функционала
+let company = Company(numberOfProgrammers: 10, specializations: [.iOS, .Android])
+
+company.writeCode(platform: .iOS, numberOfSpecialist: 3)
+company.writeCode(platform: .Android, numberOfSpecialist: 2)
+company.writeCode(platform: .Web, numberOfSpecialist: 4) // Компания не специализируется на Web
+
+company.stopCoding()
